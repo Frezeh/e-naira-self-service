@@ -1,3 +1,4 @@
+/* eslint-disable */
 import * as ActionTypes from './ActionTypes';
 import { baseCommerceLoginUrl, baseCommerceUrl, baseFiLoginUrl, baseFiUrl, baseMerchantLoginUrl, baseMerchantUrl } from './baseUrl';
 import jwt_decode from "jwt-decode";
