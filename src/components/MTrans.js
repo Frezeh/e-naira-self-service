@@ -80,7 +80,7 @@ const Enable_Withdrawal = `
 
 const uri = 'https://api.demo.bittcbdc.com/organization/login/graphql';
 const fi = 'https://api.demo.bittcbdc.com/organization/graphql';
-const enable = 'https://api.demo.bittcbdc.com/commerce/graphql';
+const enable = 'https://api.demo.bittcbdc.com/merchant/graphql';
 
 function Copyright() {
     return (
@@ -368,10 +368,10 @@ export default function MTrans() {
                                 }
                             })
                             .then((response) => {
-                                console.log(response)
-                                localStorage.setItem('status', response.data) 
-                                localStorage.setItem('amtId', response.data.createCommerceDepositRequest.id) 
-                                localStorage.setItem('amtSuccess', response.data.createCommerceDepositRequest.amount) 
+                                // console.log(response)
+                                // localStorage.setItem('status', response.data) 
+                                // localStorage.setItem('amtId', response.data.createCommerceDepositRequest.id) 
+                                // localStorage.setItem('amtSuccess', response.data.createCommerceDepositRequest.amount) 
                         });
         });
 //     })
