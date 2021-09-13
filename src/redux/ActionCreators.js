@@ -25,25 +25,24 @@ export const loginError = (message) => {
   }
 }
 
-export const loginUser = (creds) => (dispatch) => {
-  // dispatch(requestLogin(creds))
-
-  return fetch(baseCommerceLoginUrl, {
+export const loginUser = (creds) => (dispatch) => { 
+      
+      return fetch(baseFiLoginUrl, {
       method: 'POST',
       headers: { 
           'Content-Type':'application/json', 
-          'Access-Control-Allow-Origin': baseCommerceLoginUrl
+          // 'Access-Control-Allow-Origin': baseCommerceLoginUrl
       },
       body: {
-        "query": "query ($input: LoginUserInput!) {walletHolderLogin(input: $input) {token alias needsPasswordReset}}",
+        "query": "query ($input: LoginUserInput!) { login(input: $input) { token refreshToken }}",
         "variables": { "input": {
-            "email": "testing_ach@bitt.com", 
-            "password": "password1234"
+              "email":"medici.qa.test+cfb_teller@gmail.com",
+              "password":"password1234",
+              "mfaCode":"123456789"
               } 
           }
       },
     // credentials: "same-origin"
-    mode: 'no-cors'
   })
   .then(response => {
       if (response.ok) {

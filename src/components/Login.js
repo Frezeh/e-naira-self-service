@@ -6,26 +6,36 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { loginUser, logoutUser } from "../redux/ActionCreators";
-import { useDispatch } from 'react-redux';
+import { FormGroup, Label, Input, Modal, ModalHeader, ModalBody, Form } from 'reactstrap';
+import jwt_decode from "jwt-decode";
+import { Link } from 'react-router-dom';
+import logo from '../NOVALOGO.png';
+import Lottie from 'react-lottie';
+import animationData from '../43055-naira-note.json';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <div>
+       <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://novambl.com/">
-        Nova Merchant Bank
-      </Link>{' '}
+        Nova Merchant Bank {' '}
       {new Date().getFullYear()}
       {'.'}
-    </Typography>
+      </Typography>
+     <div>
+        <Lottie options={defaultOptions}
+            height={200}
+            width={200}
+          />
+     </div>
+    </div>
   );
 }
 
@@ -49,32 +59,50 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const creds = ({ username: email, password: password });
-  
-    const dispatch = useDispatch();
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      dispatch(loginUser(creds));
-      console.log(JSON.stringify(creds));
-    }
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: animationData,
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice'
+  }
+};
 
+export default function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [account, setAccount] = useState('');
+  const creds = ({ username: email, password: password });
+
+  const changeWallet = (e) => {
+    setAccount(e.target.value);
+  }
   const classes = useStyles();
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
+        <div>
+          <img src={logo} className="App-logo" alt="logo" />
+        </div>
+        <Typography component="h3" variant="h3">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+
+        <Form className={classes.form} noValidate role="form">
+          <FormGroup>
+            <Label> <Typography component="h1" variant="h5">Select Wallet Type</Typography></Label>
+            <Input type="select" name="select" id="select" className="selectText"
+              onChange={changeWallet}>
+              <option value=''>Select</option>
+              <option value='Commerce'>Commerce</option>
+              <option value='Merchant'>Merchant</option>
+            </Input>
+          </FormGroup>
+        </Form>
+
+        <form className={classes.form} noValidate>
           <TextField
             variant="outlined"
             margin="normal"
@@ -97,28 +125,28 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            // onChange={e => localStorage.setItem('userPassword', e.target.value)}
             onChange={e => setPassword(e.target.value)}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
+          {
+            account === "Commerce" 
+            ?
+            <Link to={{pathname:'/landing', state:{ email: email, password: password}}}>
+                <Button fullWidth variant="contained" color="primary" className={classes.submit}>
+                Commerce Sign In
+                </Button>
               </Link>
-            </Grid>
-          </Grid>
+            :
+            account === "Merchant" 
+            ?
+            <Link to={{pathname:'/mlanding', state:{ email: email, password: password}}}>
+                <Button fullWidth variant="contained" color="primary" className={classes.submit}>
+                Merchant Sign In
+                </Button>
+              </Link>
+            :
+            null
+          }
         </form>
       </div>
       <Box mt={8}>
@@ -127,3 +155,4 @@ export default function SignIn() {
     </Container>
   );
 }
+

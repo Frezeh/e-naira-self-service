@@ -1,3 +1,51 @@
 body {
   font-family: cursive;
 }
+
+.App-logo {
+  height: 5vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+h1 {
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+h3 {
+  border-bottom: 1px solid #bbb;
+  margin: 40px 0 10px;
+}
+
+h4 {
+  margin: 0;
+  font-size: medium;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.selectText {
+  border: 1px solid #dedede;
+  border-radius: 2px;
+  display: block;
+  font-size: 16px;
+  padding: 10px;
+  width: 100%;
+}
