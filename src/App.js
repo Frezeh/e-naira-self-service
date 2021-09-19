@@ -9,38 +9,6 @@ import Commercedeposit from './components/CommerceDeposit';
 import CommerceWithdrawal from './components/CommerceWithdrawal';
 import Login from './components/Login';
 
-const PrivateRoute = (props) => {
-  let location = useLocation();
-  const auth = useSelector(state => state.auth);
-
-  return auth.isAuthenticated ? (
-    <Route {...props} />
-  ) : (
-    <Redirect 
-      to={{
-        pathname: '/',
-        state: { from: location }
-      }} 
-    />
-  );
-};
-
-const PrivateRoute1 = (props) => {
-  let location = useLocation();
-  const auth = useSelector(state => state.auth);
-
-  return !auth.isAuthenticated ? (
-    <Route {...props} />
-  ) : (
-    <Redirect 
-      to={{
-        pathname: '/transactions',
-        state: { from: location }
-      }} 
-    />
-  );
-};
-
 // const PrivateRoute1 = (props) => {
 //   let location = useLocation();
 //   const merchantauth = useSelector(state => state.merchantauth);
@@ -60,16 +28,41 @@ const PrivateRoute1 = (props) => {
 function App() {
   useEffect(() => {
     setTimeout(() => {
-      alert('Session timed out')
-      history.push("/");
+      // alert('Session timed out')
       localStorage.clear();
     }, 300000)
-  }, [])
+  })
 
   const auth = useSelector(state => state.auth);
   const history = useHistory();
 
   let location = useLocation();
+
+  const PrivateRoute = (props) => {
+    return auth.isAuthenticated ? (
+      <Route {...props} />
+    ) : (
+      <Redirect 
+        to={{
+          pathname: '/',
+          state: { from: location }
+        }} 
+      />
+    );
+  };
+  
+  const PrivateRoute1 = (props) => {
+    return !auth.isAuthenticated ? (
+      <Route {...props} />
+    ) : (
+      <Redirect 
+        to={{
+          pathname: '/transactions',
+          state: { from: location }
+        }} 
+      />
+    );
+  };
 
   return (
     <div style={{ backgroundColor: "milk" }}>

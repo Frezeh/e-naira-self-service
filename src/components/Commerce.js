@@ -86,7 +86,7 @@ export default function Commerce() {
                 <h4>Wallet Type</h4>
                 <h1>{localStorage.getItem('type')}</h1>
                 <div style={{ justifyContent: "center", flexDirection: "column", alignItems: "center", marginTop: 20, }}>
-                <Link to={{pathname: '/commercedeposit'}}>
+                <Link to={{pathname: '/transactionsdeposit'}}>
                     <button className="btn btn-md btn-info" style={{
                             width: 500,
                             backgroundColor: "#4682B4",
@@ -102,7 +102,7 @@ export default function Commerce() {
                 </Link>
                 </div>
                 <div style={{ justifyContent: "center", flexDirection: "column", alignItems: "center", marginTop: 20, }}>
-                <Link to={{pathname: '/commercewithdrawal'}}>
+                <Link to={{pathname: '/transactionswithdrawal'}}>
                     <button className="btn btn-md btn-info" style={{
                             width: 500,
                             backgroundColor: "#4682B4",
