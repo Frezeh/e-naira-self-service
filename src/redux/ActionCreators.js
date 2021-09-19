@@ -1,7 +1,5 @@
-/* eslint-disable */
 import * as ActionTypes from './ActionTypes';
-import { baseCommerceLoginUrl, baseCommerceUrl, baseFiLoginUrl, baseFiUrl, baseMerchantLoginUrl, baseMerchantUrl } from './baseUrl';
-import jwt_decode from "jwt-decode";
+import { baseUrl } from './baseUrl';
 
 export const requestLogin = (creds) => {
   return {
@@ -25,24 +23,15 @@ export const loginError = (message) => {
   }
 }
 
-export const loginUser = (creds) => (dispatch) => { 
-      
-      return fetch(baseFiLoginUrl, {
+export const loginUser = (creds) => (dispatch) => {
+  dispatch(requestLogin(creds))
+
+  return fetch(baseUrl + 'enaira/login', {
       method: 'POST',
       headers: { 
-          'Content-Type':'application/json', 
-          // 'Access-Control-Allow-Origin': baseCommerceLoginUrl
+          'Content-Type':'application/json' 
       },
-      body: {
-        "query": "query ($input: LoginUserInput!) { login(input: $input) { token refreshToken }}",
-        "variables": { "input": {
-              "email":"medici.qa.test+cfb_teller@gmail.com",
-              "password":"password1234",
-              "mfaCode":"123456789"
-              } 
-          }
-      },
-    // credentials: "same-origin"
+      body: JSON.stringify(creds)
   })
   .then(response => {
       if (response.ok) {
@@ -59,19 +48,26 @@ export const loginUser = (creds) => (dispatch) => {
   .then(response => response.json())
   .then(response => {
       if (response.success) {
-        localStorage.setItem('token', response.token);
-        localStorage.setItem('refreshToken', response.refreshToken)
-        localStorage.setItem('decode', JSON.stringify(jwt_decode(response.token)))
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('creds', JSON.stringify(creds.email));
+          localStorage.setItem('id', response.id);
+          localStorage.setItem('balance', response.balance);
+          localStorage.setItem('type', response.type);
+          // localStorage.setItem('type', 'Registered Merhant');
 
-            alert( '👍' + ' ' + 'Login Successful:' + ' ' + 'Welcome ' + creds.username);
+            dispatch(receiveLogin(response));
+            alert( '👍' + ' ' + `${response.status}:` + ' ' + 'Welcome ' + creds.email);
       }
       else {
-          var error = new Error('Error ' + response.status);
+          var error = new Error(response.status + ' ' + response.message );
           error.response = response;
           throw error;
       }
   })
-  .catch(error => dispatch(loginError(error.message)))
+  .catch(error => { 
+      dispatch(loginError(error.message));
+      alert( '❌' + ' ' + error);
+  })
 };
 
 export const requestLogout = () => {
@@ -89,222 +85,223 @@ export const receiveLogout = () => {
 // Logs the user out
 export const logoutUser = () => (dispatch) => {
   dispatch(requestLogout())
-  localStorage.removeItem('token');
-  localStorage.removeItem('creds');
+  localStorage.clear();
 
   dispatch(receiveLogout())
   alert('Logout Successful ');
 }
 
-// export const addContactFeedback = (contact) => ({
-//   type: ActionTypes.ADD_CONTACT_FEEDBACK,
-//   payload: contact
-// });
+export const requestDeposit = () => {
+  return {
+    type: ActionTypes.DEPOSIT_LOADING,
+  }
+}
 
-// export const postContactFeedback = (values) => (dispatch) => {
-  
-//   const newFeedback = {
-//     firstname: values.firstname,
-//     lastname: values.lastname,
-//     telnum: values.telnum, 
-//     email: values.email, 
-//     agree: values.agree, 
-//     contactType: values.contactType, 
-//     message: values.message
-//   };
-  
-//   return fetch(baseUrl + 'contactus', {
-//       method: "POST",
-//       body: JSON.stringify(newFeedback),
-//       headers: {
-//         "Content-Type": "application/json"
-//       },
-//       credentials: "same-origin"
-//   })
-//   .then(response => {
-//       if (response.ok) {
-//         return response;
-//       } else {
-//         var error = new Error('Error ' + response.status + ': ' + response.statusText);
-//         error.response = response;
-//         throw error;
-//       }
-//     },
-//     error => {
-//           throw error;
-//     })
-//   .then(response => response.json())
-//   .then(response => { dispatch(addContactFeedback(response)); alert("Your feedback has been sent, Great hearing from you"); }) 
-//   .catch(error =>  error.message);
-//   //.catch(error =>  alert('Your feedback could not be posted\nError: '+error.message));
-// };
+export const receiveDeposit = (response) => {
+  return {
+    type: ActionTypes.DEPOSIT_SUCCESS,
+    status: response.status,
+    amount: response.amount,
+    id: response.id
+  }
+}
 
-// export const fetchUser = () => (dispatch) => {
+export const depositError = (message) => {
+  return {
+    type: ActionTypes.DEPOSIT_FAILURE,
+    message
+  }
+}
 
-//     const id = 'auth.id';
-//     dispatch(userLoading());
-  
-//     return fetch(baseUrl + `users/${id}`)
-//       .then(response => {
-//         if (response.ok) {
-//           return response;
-//         } else {
-//           var error = new Error('Error ' + response.status + ': ' + response.statusText);
-//           error.response = response;
-//           throw error;
-//         }
-//       },
-//         error => {
-//           var errmess = new Error(error.message);
-//           throw errmess;
-//         })
-//       .then(response => response.json())
-//       .then(user => dispatch(addUser(user)))
-//       .catch(error => dispatch(userFailed(error.message)));
-//   };
-  
-//   export const userLoading = () => ({
-//     type: ActionTypes.USER_LOADING
-//   });
-  
-//   export const userFailed = (errmess) => ({
-//     type: ActionTypes.USER_FAILED,
-//     payload: errmess
-//   });
-  
-//   export const addUser = (user) => ({
-//     type: ActionTypes.ADD_USER,
-//     payload: user
-//   });
-  
-//   export const fxHistoryLoading = () => ({
-//     type: ActionTypes.FXHISTORY_LOADING
-//   });
-  
-//   export const fxHistoryFailed = (errmess) => ({
-//     type: ActionTypes.FXHISTORY_FAILED,
-//     payload: errmess
-//   });
-  
-//   export const addFxHistory = (user) => ({
-//     type: ActionTypes.ADD_FXHISTORY,
-//     payload: user
-//   });
-  
-//   export const addFxSale = (fx) => ({
-//     type: ActionTypes.ADD_FX,
-//     payload: fx
-//   });
-  
-//   export const postFxSale = (selltext, sellamount) => (dispatch) => {
-  
-//     const newSale = {
-//       text: selltext,
-//       amount: sellamount,
-//     };
-  
-//     const bearer = 'Bearer ' + localStorage.getItem('token');//asyn
-  
-//     return fetch(baseUrl + 'fx/sell', {
-//       method: "POST",
-//       body: JSON.stringify(newSale),
-//       headers: {
-//         "Content-Type": "application/json",
-//         'Authorization': bearer
-//       },
-//       credentials: "same-origin"
-//     })
-//       .then(response => {
-//         if (response.ok) {
-//           return response;
-//         } else {
-//           var error = new Error('Error ' + response.status + ': ' + response.statusText);
-//           error.response = response;
-//           throw error;
-//         }
-//       },
-//         error => {
-//           throw error;
-//         })
-//       .then(response => response.json())
-//       .then(stock => { dispatch(addFxSale(stock)); alert('👍' + ' ' + 'Your Request has been sent! '); })
-//       .catch(error => { alert('Your sale could not be posted, \nError: ' + error.message); });
-//   };
+export const commerceTranxDeposit = () => (dispatch) => {
+  const body = {
+    amount: localStorage.getItem('amount'),
+    Id: localStorage.getItem('id')
+};
 
-//   export const postFxPurchase = (buytext, buyamount) => (dispatch) => {
-  
-//     const newPurchase = {
-//       text: buytext,
-//       amount: buyamount,
-//     };
-  
-//     const bearer = 'Bearer ' + localStorage.getItem('token');//asyn
-  
-//     return fetch(baseUrl + 'fx/buy', {
-//       method: "POST",
-//       body: JSON.stringify(newPurchase),
-//       headers: {
-//         "Content-Type": "application/json",
-//         'Authorization': bearer
-//       },
-//       credentials: "same-origin"
-//     })
-//       .then(response => {
-//         if (response.ok) {
-//           return response;
-//         } else {
-//           var error = new Error('Error ' + response.status + ': ' + response.statusText);
-//           error.response = response;
-//           throw error;
-//         }
-//       },
-//         error => {
-//           throw error;
-//         })
-//       .then(response => response.json())
-//       .then(stock => { dispatch(addFxSale(stock)); alert('👍' + ' ' + 'Your Request has been sent, \nAllow some time for confirmation and DO NOT resend the request ! '); })
-//       .catch(error => { alert('Your purchase could not be posted, \nError: ' + error.message); });
-//   };
+dispatch(requestDeposit())
 
-//   export const addFeedback = (feedback) => ({
-//     type: ActionTypes.ADD_FEEDBACK,
-//     payload: feedback
-//   });
-  
-//   export const postFeedback = (values) => (dispatch) => {
-  
-//     const newFeedback = {
-//       firstname: values.firstname,
-//       lastname: values.lastname,
-//       telnum: values.telnum,
-//       email: values.email,
-//       bvnnum: values.bvnnum,
-//       address: values.address
-//     };
-  
-//     return fetch(baseUrl + 'feedback', {
-//       method: "POST",
-//       body: JSON.stringify(newFeedback),
-//       headers: {
-//         "Content-Type": "application/json"
-//       },
-//       credentials: "same-origin"
-//     })
-//       .then(response => {
-//         if (response.ok) {
-//           return response;
-//         } else {
-//           var error = new Error('Error ' + response.status + ': ' + response.statusText);
-//           error.response = response;
-//           throw error;
-//         }
-//       },
-//         error => {
-//           throw error;
-//         })
-//       .then(response => response.json())
-//       .then(response => { dispatch(addFeedback(response)); alert('👍' + ' ' + 'Registration Successful! Allow 24hrs for feedback.'); })
-//       .catch(error => alert('Your registration could not be posted\nError: ' + error.message));
-//   };
-  
+return fetch(baseUrl + 'enaira/deposit', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+})
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+        error => {
+            throw error;
+        })
+    .then(response => response.json())
+    .then(response => {
+        if (response.success) {
+            localStorage.setItem('success', 'Successful  👍');
+            localStorage.setItem('status', response.status);
+            localStorage.setItem('amount', response.amount);
+            localStorage.setItem('guid', response.id);
 
+            dispatch(receiveDeposit(response));
+        }
+        else {
+            var error = new Error(response.status + ' ' + response.message);
+            error.response = response;
+            localStorage.setItem('success', 'Unsuccessful  ❌');
+            localStorage.setItem('status', response.status);
+            localStorage.setItem('message', response.message);                    
+            throw error;
+        }
+    })
+    .catch(error => {
+        dispatch(depositError(error.message))
+    })
+};
+
+export const requestWithdrawal = () => {
+  return {
+    type: ActionTypes.WITHDRAWAL_LOADING,
+  }
+}
+
+export const receiveWithdrawal = (response) => {
+  return {
+    type: ActionTypes.WITHDRAWAL_SUCCESS,
+    status: response.status,
+    amount: response.amount,
+    id: response.id
+  }
+}
+
+export const WithdrawalError = (message) => {
+  return {
+    type: ActionTypes.WITHDRAWAL_FAILURE,
+    message
+  }
+}
+
+export const commerceTranxWithdrawal = () => (dispatch) => {
+  const body = {
+    amount: localStorage.getItem('amount'),
+    Id: localStorage.getItem('id'),
+    token: localStorage.getItem('token')
+};
+
+dispatch(requestWithdrawal())
+
+return fetch(baseUrl + 'enaira/withdrawal', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+})
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+        error => {
+            throw error;
+        })
+    .then(response => response.json())
+    .then(response => {
+        if (response.success) {
+            localStorage.setItem('success', 'Successful  👍');
+            localStorage.setItem('status', response.status);
+            localStorage.setItem('amount', response.amount);
+            localStorage.setItem('guid', response.id);
+
+            dispatch(receiveWithdrawal(response));
+        }
+        else {
+            var error = new Error(response.status + ' ' + response.message);
+            error.response = response;
+            localStorage.setItem('success', 'Unsuccessful  ❌');
+            localStorage.setItem('status', response.status);
+            localStorage.setItem('message', response.message);                    
+            throw error;
+        }
+    })
+    .catch(error => {
+        dispatch(WithdrawalError(error.message))
+    })
+};
+
+export const requestMerchantLogin = (merchantCreds) => {
+  return {
+    type: ActionTypes.MERCHANT_LOGIN_REQUEST,
+    merchantCreds
+  }
+}
+
+// export const receiveMerchantLogin = (response) => {
+//   return {
+//     type: ActionTypes.MERCHANT_LOGIN_SUCCESS,
+//     token: response.token,
+//     id: response.id
+//   }
+// }
+
+// export const loginMerchantError = (message) => {
+//   return {
+//     type: ActionTypes.MERCHANT_LOGIN_FAILURE,
+//     message
+//   }
+// }
+
+export const loginMerchant = (merchantCreds) => (dispatch) => {
+  dispatch(requestMerchantLogin(merchantCreds))
+
+  return fetch(baseUrl + 'enaira/merchant/login', {
+      method: 'POST',
+      headers: { 
+          'Content-Type':'application/json' 
+      },
+      body: JSON.stringify(merchantCreds)
+  })
+  .then(response => {
+      if (response.ok) {
+          return response;
+      } else {
+          var error = new Error('Error ' + response.status + ': ' + response.statusText);
+          error.response = response;
+          throw error;
+      }
+      },
+      error => {
+          throw error;
+      })
+  .then(response => response.json())
+  .then(response => {
+      if (response.success) {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('creds', JSON.stringify(merchantCreds.username));
+          localStorage.setItem('id', response.id);
+          localStorage.setItem('balance', response.balance);
+          localStorage.setItem('type', 'Registered Merchant');
+
+            dispatch(receiveLogin(response));
+            alert( '👍' + ' ' + `${response.status}:` + ' ' + 'Welcome ' + merchantCreds.username);
+      }
+      else {
+          var error = new Error(response.status + ' ' + response.message );
+          error.response = response;
+          throw error;
+      }
+  })
+  .catch(error => { 
+      dispatch(loginError(error.message));
+      alert( '❌' + ' ' + error);
+  })
+};

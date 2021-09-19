@@ -12,11 +12,11 @@ import reportWebVitals from './reportWebVitals';
 //   gql
 // } from "@apollo/client";
 import { BrowserRouter } from 'react-router-dom';
-// import { Provider } from 'react-redux';
+import {  Provider} from 'react-redux';
 import { ConfigureStore } from './redux/ConfigureStore'; 
 import { QueryClient, QueryClientProvider } from "react-query";
 
-// const store = ConfigureStore();
+const store = ConfigureStore();
 
 // const client = new ApolloClient({
 //   // uri: 'https://71z1g.sse.codesandbox.io/',
@@ -26,13 +26,24 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 const client = new QueryClient();
 
+// ReactDOM.render(
+//   <React.StrictMode>
+//       <QueryClientProvider client={client}>
+//       <BrowserRouter>
+//         <App />
+//       </BrowserRouter>
+//       </QueryClientProvider>,
+//   </React.StrictMode>,
+//   document.getElementById('root')
+// );
+
 ReactDOM.render(
   <React.StrictMode>
-      <QueryClientProvider client={client}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-      </QueryClientProvider>,
+    <Provider store={store}>
+    <BrowserRouter>
+    <App />
+    </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

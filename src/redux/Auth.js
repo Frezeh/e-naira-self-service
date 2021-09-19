@@ -30,6 +30,12 @@ export const auth = (state = {
                 isAuthenticated: false,
                 errMess: action.message
             };
+            case ActionTypes. MERCHANT_LOGIN_REQUEST:
+            return {...state,
+                isLoading: true,
+                isAuthenticated: false,
+                user: action.merchantCreds
+            };
         case ActionTypes.LOGOUT_REQUEST:
             return {...state,
                 isLoading: true,
