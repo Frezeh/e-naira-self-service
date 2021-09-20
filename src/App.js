@@ -66,7 +66,8 @@ function App() {
   };
 
   return (
-    <div style={{ backgroundColor: "white", backgroundImage: `url(${background})` }}>
+    // <div style={{ backgroundColor: "white", backgroundImage: `url(${background})` }}>
+    <div>
       <TransitionGroup>
         <CSSTransition key={location.key} classNames="page" timeout={300}>
           <Switch>
