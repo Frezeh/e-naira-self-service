@@ -12,12 +12,13 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { FormGroup, Label, Input, Modal, ModalHeader, ModalBody, Form } from 'reactstrap';
 import logo from '../NOVALOGO.png';
 import Lottie from 'react-lottie';
 import animationData from '../43055-naira-note.json';
-import { loginUser, loginMerchant } from "../redux/ActionCreators";
+import { loginUser } from "../redux/ActionCreators";
 import { useDispatch } from 'react-redux';
 import background from "../pexels-pixabay-235994.jpg";
 import { Redirect, useHistory, Link } from 'react-router-dom';
@@ -25,12 +26,14 @@ import { Redirect, useHistory, Link } from 'react-router-dom';
 function Copyright() {
     return (
         <div>
-            <Typography variant="body2" color="textSecondary" align="center">
-                {'Copyright © '}
-        Nova Merchant Bank {' '}
-                {new Date().getFullYear()}
-                {'.'}
-            </Typography>
+           <Typography variant="body2" color="textSecondary" align="center">
+            {'Copyright © '}
+            <Link color="inherit" href="https://novambl.com.com/">
+                Nova Merchant Bank
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
             <div>
                 <Lottie options={defaultOptions}
                     height={200}
@@ -40,6 +43,8 @@ function Copyright() {
         </div>
     );
 }
+
+const theme = createTheme();
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -95,6 +100,7 @@ export default function Login(props) {
 
     return (
         // <div className="landing-wrapper" style={{ backgroundImage: `url(${background})` }}>
+        <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className={classes.paper}>
@@ -163,6 +169,7 @@ export default function Login(props) {
                     <Copyright />
                 </Box>
             </Container>
+        </ThemeProvider>
         // </div>
     );
 }

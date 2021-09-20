@@ -8,6 +8,7 @@ import Commerce from './components/Commerce';
 import Commercedeposit from './components/CommerceDeposit';
 import CommerceWithdrawal from './components/CommerceWithdrawal';
 import Login from './components/Login';
+import background from "./pexels-pixabay-235994.jpg";
 
 // const PrivateRoute1 = (props) => {
 //   let location = useLocation();
@@ -29,7 +30,7 @@ function App() {
   useEffect(() => {
     setTimeout(() => {
       // alert('Session timed out')
-      localStorage.clear();
+       localStorage.clear();
     }, 300000)
   })
 
@@ -65,7 +66,7 @@ function App() {
   };
 
   return (
-    <div style={{ backgroundColor: "milk" }}>
+    <div style={{ backgroundColor: "white", backgroundImage: `url(${background})` }}>
       <TransitionGroup>
         <CSSTransition key={location.key} classNames="page" timeout={300}>
           <Switch>
