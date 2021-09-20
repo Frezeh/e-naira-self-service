@@ -306,3 +306,106 @@ export const loginMerchant = (merchantCreds) => (dispatch) => {
       alert( '❌' + ' ' + error);
   })
 };
+
+export const merchantTranxDeposit = () => (dispatch) => {
+  const body = {
+    amount: localStorage.getItem('amount'),
+    Id: localStorage.getItem('id')
+};
+
+dispatch(requestDeposit())
+
+return fetch(baseUrl + 'enaira/merchant/deposit', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+})
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+        error => {
+            throw error;
+        })
+    .then(response => response.json())
+    .then(response => {
+        if (response.success) {
+            localStorage.setItem('success', 'Successful  👍');
+            localStorage.setItem('status', response.status);
+            localStorage.setItem('amount', response.amount);
+            localStorage.setItem('guid', response.id);
+
+            dispatch(receiveDeposit(response));
+        }
+        else {
+            var error = new Error(response.status + ' ' + response.message);
+            error.response = response;
+            localStorage.setItem('success', 'Unsuccessful  ❌');
+            localStorage.setItem('status', response.status);
+            localStorage.setItem('message', response.message);                    
+            throw error;
+        }
+    })
+    .catch(error => {
+        dispatch(depositError(error.message))
+    })
+};
+
+export const merchantTranxWithdrawal = () => (dispatch) => {
+  const body = {
+    amount: localStorage.getItem('amount'),
+    Id: localStorage.getItem('id'),
+    token: localStorage.getItem('token')
+};
+
+dispatch(requestWithdrawal())
+
+return fetch(baseUrl + 'enaira/merchant/withdrawal', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+})
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            var error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+        }
+    },
+        error => {
+            throw error;
+        })
+    .then(response => response.json())
+    .then(response => {
+        if (response.success) {
+            localStorage.setItem('success', 'Successful  👍');
+            localStorage.setItem('status', response.status);
+            localStorage.setItem('amount', response.amount);
+            localStorage.setItem('guid', response.id);
+
+            dispatch(receiveWithdrawal(response));
+        }
+        else {
+            var error = new Error(response.status + ' ' + response.message);
+            error.response = response;
+            localStorage.setItem('success', 'Unsuccessful  ❌');
+            localStorage.setItem('status', response.status);
+            localStorage.setItem('message', response.message);                    
+            throw error;
+        }
+    })
+    .catch(error => {
+        dispatch(WithdrawalError(error.message))
+    })
+};

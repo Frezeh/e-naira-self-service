@@ -2,13 +2,16 @@
 import React, { useEffect, useState } from 'react'
 import { Loading } from './LoadingComponent';
 import Typography from '@material-ui/core/Typography';
-import { commerceTranxWithdrawal } from '../redux/ActionCreators';
+import { commerceTranxWithdrawal, merchantTranxWithdrawal } from '../redux/ActionCreators';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function ProcessingWithdrawal() {
     useEffect(() => {
-        if (auth.isAuthenticated) {
+        if (localStorage.getItem('type') === 'Registered User') {
             dispatch(commerceTranxWithdrawal())
+        }
+        if (localStorage.getItem('type') === 'Registered Merchant') {
+            dispatch(merchantTranxWithdrawal())
         }
     }, [])
 

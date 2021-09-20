@@ -2,13 +2,16 @@
 import React, { useEffect, useState } from 'react'
 import { Loading } from './LoadingComponent';
 import Typography from '@material-ui/core/Typography';
-import { commerceTranxDeposit } from '../redux/ActionCreators';
+import { commerceTranxDeposit, merchantTranxDeposit } from '../redux/ActionCreators';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function Processing() {
     useEffect(() => {
-        if (auth.isAuthenticated) {
+        if (localStorage.getItem('type') === 'Registered User') {
             dispatch(commerceTranxDeposit())
+        }
+        if (localStorage.getItem('type') === 'Registered Merchant') {
+            dispatch(merchantTranxDeposit())
         }
     }, [])
 
