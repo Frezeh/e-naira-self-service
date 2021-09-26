@@ -18,7 +18,7 @@ import { FormGroup, Label, Input, Modal, ModalHeader, ModalBody, Form } from 're
 import logo from '../NOVALOGO.png';
 import Lottie from 'react-lottie';
 import animationData from '../43055-naira-note.json';
-import { loginUser } from "../redux/ActionCreators";
+import { loginUser, loginMerchant } from "../redux/ActionCreators";
 import { useDispatch } from 'react-redux';
 import background from "../pexels-pixabay-235994.jpg";
 import { Redirect, useHistory, Link } from 'react-router-dom';
