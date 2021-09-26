@@ -1,9 +1,9 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react'
-import { Loading } from './LoadingComponent';
 import Typography from '@material-ui/core/Typography';
 import { commerceTranxDeposit, merchantTranxDeposit } from '../redux/ActionCreators';
 import { useDispatch, useSelector } from 'react-redux';
+import { LoadingTransaction } from './LoadingTransaction';
 
 export default function Processing() {
     useEffect(() => {
@@ -22,7 +22,7 @@ export default function Processing() {
 
     if (deposit.isLoading) {
         return (
-            <Loading />
+            <LoadingTransaction />
         );
 
     } else {

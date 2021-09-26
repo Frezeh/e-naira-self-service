@@ -1,9 +1,9 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react'
-import { Loading } from './LoadingComponent';
 import Typography from '@material-ui/core/Typography';
 import { commerceTranxWithdrawal, merchantTranxWithdrawal } from '../redux/ActionCreators';
 import { useDispatch, useSelector } from 'react-redux';
+import { LoadingTransaction } from './LoadingTransaction';
 
 export default function ProcessingWithdrawal() {
     useEffect(() => {
@@ -21,7 +21,7 @@ export default function ProcessingWithdrawal() {
 
     if (withdrawal.isLoading) {
         return (
-            <Loading />
+            <LoadingTransaction />
         );
 
     } else {

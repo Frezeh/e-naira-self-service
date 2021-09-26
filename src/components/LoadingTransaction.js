@@ -8,7 +8,7 @@ export const LoadingTransaction = () => {
             <div style={{ alignContent: "center" }}>
                 <CircularProgress />
                 <p>Transaction in Progress . . .</p>
-                <p>Do not click any button!! 🚫</p>
+                <p>Do not click on any button!! 🚫</p>
             </div>
         </Grid>
     );
