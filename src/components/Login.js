@@ -1,27 +1,20 @@
 /* eslint-disable */
 import React, { useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-// import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { FormGroup, Label, Input, Modal, ModalHeader, ModalBody, Form } from 'reactstrap';
-import logo from '../NOVALOGO.png';
+import { FormGroup, Label, Input, Form } from 'reactstrap';
+import logo from '../images/NOVALOGO.png';
 import Lottie from 'react-lottie';
-import animationData from '../43055-naira-note.json';
+import animationData from '../images/43055-naira-note.json';
 import { loginUser, loginMerchant } from "../redux/ActionCreators";
 import { useDispatch } from 'react-redux';
-import background from "../pexels-pixabay-235994.jpg";
-import { Redirect, useHistory, Link } from 'react-router-dom';
 
 function Copyright() {
     return (
@@ -75,7 +68,7 @@ const defaultOptions = {
     }
 };
 
-export default function Login(props) {
+export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [account, setAccount] = useState('');
@@ -99,7 +92,6 @@ export default function Login(props) {
     const classes = useStyles();
 
     return (
-        // <div className="landing-wrapper" style={{ backgroundImage: `url(${background})` }}>
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
@@ -149,19 +141,19 @@ export default function Login(props) {
                             onChange={e => setPassword(e.target.value)}
                         />
                         {
-                            account === "Commerce"
-                                ?
-                                <Button fullWidth variant="contained" color="primary" className={classes.submit} onClick={handleLogin}>
-                                    Commerce Sign In
-                        </Button>
-                                :
-                                account === "Merchant"
-                                    ?
-                                    <Button fullWidth variant="contained" color="primary" className={classes.submit} onClick={handleMerchantLogin}>
-                                        Merchant Sign In
-                        </Button>
-                                    :
-                                    null
+                        account === "Commerce"
+                            ?
+                            <Button fullWidth variant="contained" color="primary" className={classes.submit} onClick={handleLogin}>
+                                Commerce Sign In
+                            </Button>
+                            :
+                        account === "Merchant"
+                            ?
+                            <Button fullWidth variant="contained" color="primary" className={classes.submit} onClick={handleMerchantLogin}>
+                                Merchant Sign In
+                            </Button>
+                            :
+                            null
                         }
                     </form>
                 </div>
@@ -170,7 +162,6 @@ export default function Login(props) {
                 </Box>
             </Container>
         </ThemeProvider>
-        // </div>
     );
 }
 

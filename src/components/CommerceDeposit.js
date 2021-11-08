@@ -1,18 +1,7 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Paper from '@material-ui/core/Paper';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import Lock from '@material-ui/icons/Lock';
-import IconButton from '@material-ui/core/IconButton';
+import { Paper, Typography, useMediaQuery, Stepper, Step, StepLabel, Button, TextField } from '@material-ui/core';
 import { logoutUser } from '../redux/ActionCreators';
 import { useDispatch } from 'react-redux';
 import Link from '@material-ui/core/Link';
@@ -75,17 +64,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Commercedeposit() {
-
     const classes = useStyles();
+    const desktop = useMediaQuery('(min-width:600px)');
     const [activeStep, setActiveStep] = React.useState(0);
     const dispatch = useDispatch();
 
     const handleNext = () => {
         setActiveStep(activeStep + 1);
-    };
-
-    const handleBack = () => {
-        setActiveStep(activeStep - 1);
     };
 
     const HandleLogout = () => {
@@ -124,6 +109,7 @@ export default function Commercedeposit() {
                         name="amount"
                         autoFocus
                         onChange={e => localStorage.setItem('amount', e.target.value)}
+                        //   
                     />
                 </form>
             </>
@@ -144,7 +130,6 @@ export default function Commercedeposit() {
                         label="Token"
                         name="entrust"
                         autoFocus
-                    // onChange={e => setEmail(e.target.value)}
                     />
                 </form>
             </>
@@ -171,19 +156,30 @@ export default function Commercedeposit() {
                 <Paper className={classes.paper}>
                     <Typography component="h1" variant="h4" align="center">
                         Perform Transactions
-          </Typography>
-                    <Stepper activeStep={activeStep} className={classes.stepper}>
+                    </Typography>
+                    {!desktop
+                        ?
+                        <Stepper activeStep={activeStep} className={classes.stepper} style={{ flexWrap: "wrap" }}>
                         {steps.map((label) => (
                             <Step key={label}>
                                 <StepLabel>{label}</StepLabel>
                             </Step>
                         ))}
-                    </Stepper>
+                        </Stepper>
+                        :
+                        <Stepper activeStep={activeStep} className={classes.stepper}>
+                        {steps.map((label) => (
+                            <Step key={label}>
+                                <StepLabel>{label}</StepLabel>
+                            </Step>
+                        ))}
+                        </Stepper>
+                    }
                     <React.Fragment>
                         {/* Use for mutation */}
                         {activeStep === steps.length ? (
-                             <button className="btn btn-md btn-info"  onClick={HandleLogout} style={{
-                                width: 500,
+                             <button onClick={HandleLogout} style={{
+                                width: '100%',
                                 backgroundColor: "#4682B4",
                                 padding: 15,
                                 justifyContent: "center",

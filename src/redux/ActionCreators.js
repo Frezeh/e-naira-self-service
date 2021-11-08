@@ -1,6 +1,7 @@
 /* eslint-disable */
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from './baseUrl';
+import toast from 'react-hot-toast';
 
 export const requestLogin = (creds) => {
   return {
@@ -25,7 +26,12 @@ export const loginError = (message) => {
 }
 
 export const loginUser = (creds) => (dispatch) => {
+
   dispatch(requestLogin(creds))
+
+  toast.loading('Loading...', {
+    duration: 2000
+  });
 
   return fetch(baseUrl + 'enaira/login', {
       method: 'POST',
@@ -54,10 +60,10 @@ export const loginUser = (creds) => (dispatch) => {
           localStorage.setItem('id', response.id);
           localStorage.setItem('balance', response.balance);
           localStorage.setItem('type', response.type);
-          // localStorage.setItem('type', 'Registered Merhant');
+          localStorage.setItem('kyc', response.kyc);
 
             dispatch(receiveLogin(response));
-            alert( '👍' + ' ' + `${response.status}:` + ' ' + 'Welcome ' + creds.email);
+            toast.success(`${response.status}:` + ' ' + 'Welcome ' + creds.email);
       }
       else {
           var error = new Error(response.status + ' ' + response.message );
@@ -67,7 +73,7 @@ export const loginUser = (creds) => (dispatch) => {
   })
   .catch(error => { 
       dispatch(loginError(error.message));
-      alert( '❌' + ' ' + error);
+      toast.error(`${error}`)
   })
 };
 
@@ -83,13 +89,12 @@ export const receiveLogout = () => {
   }
 }
 
-// Logs the user out
 export const logoutUser = () => (dispatch) => {
   dispatch(requestLogout())
   localStorage.clear();
 
   dispatch(receiveLogout())
-  alert('Logout Successful ');
+  toast.success('Logout Successful ');
 }
 
 export const requestDeposit = () => {
@@ -117,7 +122,7 @@ export const depositError = (message) => {
 export const commerceTranxDeposit = () => (dispatch) => {
   const body = {
     amount: localStorage.getItem('amount'),
-    Id: localStorage.getItem('id')
+    Id: localStorage.getItem('id'),
 };
 
 dispatch(requestDeposit())
@@ -290,10 +295,11 @@ export const loginMerchant = (merchantCreds) => (dispatch) => {
           localStorage.setItem('creds', JSON.stringify(merchantCreds.username));
           localStorage.setItem('id', response.id);
           localStorage.setItem('balance', response.balance);
-          localStorage.setItem('type', 'Registered Merchant');
+          localStorage.setItem('type', response.type);
+          localStorage.setItem('kyc', response.kyc);
 
             dispatch(receiveLogin(response));
-            alert( '👍' + ' ' + `${response.status}:` + ' ' + 'Welcome ' + merchantCreds.username);
+            toast.success(`${response.status}:` + ' ' + 'Welcome ' + merchantCreds.username);
       }
       else {
           var error = new Error(response.status + ' ' + response.message );
@@ -303,7 +309,7 @@ export const loginMerchant = (merchantCreds) => (dispatch) => {
   })
   .catch(error => { 
       dispatch(loginError(error.message));
-      alert( '❌' + ' ' + error);
+      toast.error(`${error}`)
   })
 };
 

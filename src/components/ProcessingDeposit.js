@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Typography from '@material-ui/core/Typography';
 import { commerceTranxDeposit, merchantTranxDeposit } from '../redux/ActionCreators';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,7 +42,8 @@ export default function Processing() {
             :
             <Typography variant="subtitle1">
                 ReferenceId: {localStorage.getItem('guid')}
-            </Typography>            }
+            </Typography>            
+            }
             </>
         );
     }
