@@ -119,9 +119,9 @@ export const depositError = (message) => {
   }
 }
 
-export const commerceTranxDeposit = () => (dispatch) => {
+export const commerceTranxDeposit = (amount) => (dispatch) => {
   const body = {
-    amount: localStorage.getItem('amount'),
+    amount: amount,
     Id: localStorage.getItem('id'),
 };
 
@@ -192,9 +192,9 @@ export const WithdrawalError = (message) => {
   }
 }
 
-export const commerceTranxWithdrawal = () => (dispatch) => {
+export const commerceTranxWithdrawal = (amount) => (dispatch) => {
   const body = {
-    amount: localStorage.getItem('amount'),
+    amount: amount,
     Id: localStorage.getItem('id'),
     token: localStorage.getItem('token')
 };

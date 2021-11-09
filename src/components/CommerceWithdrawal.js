@@ -64,7 +64,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CommerceWithdrawal() {
-
+    const [amount, setAmount] = useState(0);
+    const [token, setToken] = useState(0);
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const desktop = useMediaQuery('(min-width:600px)');
@@ -83,19 +84,19 @@ export default function CommerceWithdrawal() {
     function getStepContent(step) {
         switch (step) {
             case 0:
-                return <Amount />;
+                return <Amount setAmount={setAmount}/>;
             case 1:
-                return <Token />;
+                return <Token setToken={setToken}/>;
             case 2:
                 return <Authorize />;
             case 3:
-                return <ProcessingWithdrawal />;
+                return <ProcessingWithdrawal amount={amount}/>;
             default:
                 throw new Error('Unknown step');
         }
     }
 
-    const Amount = () => {
+    const Amount = ({ setAmount }) => {
         return (
             <>
                 <h4>Transfer amount </h4>
@@ -105,19 +106,18 @@ export default function CommerceWithdrawal() {
                         margin="normal"
                         required
                         fullWidth
-                        id="withdrawalamount"
+                        id="amount"
                         label="₦ Amount"
-                        name="withdrawalamount"
-                        autoComplete="withdrawalamount"
+                        name="amount"
                         autoFocus
-                        onChange={e => localStorage.setItem('amount', e.target.value)}
+                        onChange={e => setAmount(e.target.value)}
                     />
                 </form>
             </>
         );
     }
 
-    const Token = () => {
+    const Token = ({ setToken }) => {
         return (
             <>
                 <h4> entrust Token</h4>
@@ -131,6 +131,7 @@ export default function CommerceWithdrawal() {
                         label="Token"
                         name="entrust"
                         autoFocus
+                        onChange={e => setToken(e.target.value)}
                     />
                 </form>
             </>

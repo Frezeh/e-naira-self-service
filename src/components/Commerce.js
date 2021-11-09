@@ -46,10 +46,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Commerce() {
     useEffect(() => {
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             localStorage.clear();
             window.location.reload();
-        }, 300000)
+        }, 300000);
+        return () => clearTimeout(timer);
+    }, []);
+
+    useEffect(() => {
         notify();
     }, [])
 

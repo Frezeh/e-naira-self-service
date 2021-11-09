@@ -5,13 +5,13 @@ import { commerceTranxWithdrawal, merchantTranxWithdrawal } from '../redux/Actio
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadingTransaction } from './LoadingTransaction';
 
-export default function ProcessingWithdrawal() {
+export default function ProcessingWithdrawal({ amount }) {
     useEffect(() => {
         if (localStorage.getItem('type') === 'Registered User') {
-            dispatch(commerceTranxWithdrawal())
+            dispatch(commerceTranxWithdrawal(amount))
         }
         if (localStorage.getItem('type') === 'Registered Merchant') {
-            dispatch(merchantTranxWithdrawal())
+            dispatch(merchantTranxWithdrawal(amount))
         }
     }, [])
 

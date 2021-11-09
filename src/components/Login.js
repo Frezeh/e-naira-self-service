@@ -106,7 +106,7 @@ export default function Login() {
                     <Form className={classes.form} noValidate role="form">
                         <FormGroup>
                             <Label> <Typography component="h1" variant="h5">Select Wallet Type</Typography></Label>
-                            <Input type="select" name="select" id="select" className="selectText"
+                            <Input type="select" id="select" className="selectText"
                                 onChange={changeWallet}>
                                 <option value=''>Select</option>
                                 <option value='Commerce'>Commerce</option>

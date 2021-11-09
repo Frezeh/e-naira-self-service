@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { Paper, Typography, useMediaQuery, Stepper, Step, StepLabel, Button, TextField } from '@material-ui/core';
 import { logoutUser } from '../redux/ActionCreators';
@@ -64,6 +64,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Commercedeposit() {
+    const [amount, setAmount] = useState(0);
+    const [token, setToken] = useState(0);
     const classes = useStyles();
     const desktop = useMediaQuery('(min-width:600px)');
     const [activeStep, setActiveStep] = React.useState(0);
@@ -82,19 +84,19 @@ export default function Commercedeposit() {
     function getStepContent(step) {
         switch (step) {
             case 0:
-                return <Amount />;
+                return <Amount setAmount={setAmount} />;
             case 1:
-                return <Token />;
+                return <Token setToken={setToken}/>;
             case 2:
                 return <Authorize />;
             case 3:
-                return <Processing />;
+                return <Processing amount={amount}/>;
             default:
                 throw new Error('Unknown step');
         }
     }
 
-    const Amount = () => {
+    const Amount = ({ setAmount }) => {
         return (
             <>
                 <h4>Transfer amount </h4>
@@ -108,15 +110,14 @@ export default function Commercedeposit() {
                         label="₦ Amount"
                         name="amount"
                         autoFocus
-                        onChange={e => localStorage.setItem('amount', e.target.value)}
-                        //   
+                        onChange={e => setAmount(e.target.value)}
                     />
                 </form>
             </>
         );
     }
 
-    const Token = () => {
+    const Token = ({ setToken }) => {
         return (
             <>
                 <h4> entrust Token</h4>
@@ -130,6 +131,7 @@ export default function Commercedeposit() {
                         label="Token"
                         name="entrust"
                         autoFocus
+                        onChange={e => setToken(e.target.value)}
                     />
                 </form>
             </>
@@ -160,25 +162,25 @@ export default function Commercedeposit() {
                     {!desktop
                         ?
                         <Stepper activeStep={activeStep} className={classes.stepper} style={{ flexWrap: "wrap" }}>
-                        {steps.map((label) => (
-                            <Step key={label}>
-                                <StepLabel>{label}</StepLabel>
-                            </Step>
-                        ))}
+                            {steps.map((label) => (
+                                <Step key={label}>
+                                    <StepLabel>{label}</StepLabel>
+                                </Step>
+                            ))}
                         </Stepper>
                         :
                         <Stepper activeStep={activeStep} className={classes.stepper}>
-                        {steps.map((label) => (
-                            <Step key={label}>
-                                <StepLabel>{label}</StepLabel>
-                            </Step>
-                        ))}
+                            {steps.map((label) => (
+                                <Step key={label}>
+                                    <StepLabel>{label}</StepLabel>
+                                </Step>
+                            ))}
                         </Stepper>
                     }
                     <React.Fragment>
                         {/* Use for mutation */}
                         {activeStep === steps.length ? (
-                             <button onClick={HandleLogout} style={{
+                            <button onClick={HandleLogout} style={{
                                 width: '100%',
                                 backgroundColor: "#4682B4",
                                 padding: 15,
@@ -188,14 +190,14 @@ export default function Commercedeposit() {
                                 color: "white",
                                 fontSize: 20
                             }}>
-                               End Session
+                                End Session
                             </button>
                         ) : (
                             <React.Fragment>
                                 {getStepContent(activeStep)}
                                 <div className={classes.buttons}>
                                     {activeStep !== 0 && (
-                                       null
+                                        null
                                     )}
                                     <Button
                                         variant="contained"

@@ -5,13 +5,13 @@ import { commerceTranxDeposit, merchantTranxDeposit } from '../redux/ActionCreat
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadingTransaction } from './LoadingTransaction';
 
-export default function Processing() {
+export default function Processing({ amount }) {
     useEffect(() => {
         if (localStorage.getItem('type') === 'Registered User') {
-            dispatch(commerceTranxDeposit())
+            dispatch(commerceTranxDeposit(amount))
         }
         if (localStorage.getItem('type') === 'Registered Merchant') {
-            dispatch(merchantTranxDeposit())
+            dispatch(merchantTranxDeposit(amount))
         }
     }, [])
 
