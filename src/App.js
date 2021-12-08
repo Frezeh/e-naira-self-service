@@ -15,31 +15,44 @@ function App() {
 
   let location = useLocation();
 
-  const PrivateRoute = (props) => {
-    return auth.isAuthenticated ? (
-      <Route {...props} />
-    ) : (
-      <Redirect
-        to={{
+  // const PrivateRoute = (props) => {
+  //   return auth.isAuthenticated ? (
+  //     <Route {...props} />
+  //   ) : (
+  //     <Redirect
+  //       to={{
+  //         pathname: '/',
+  //         state: { from: location }
+  //       }}
+  //     />
+  //   );
+  // };
+
+  // const PrivateRoute1 = (props) => {
+  //   return !auth.isAuthenticated ? (
+  //     <Route {...props} />
+  //   ) : (
+  //     <Redirect
+  //       to={{
+  //         pathname: '/transactions',
+  //         state: { from: location }
+  //       }}
+  //     />
+  //   );
+  // };
+
+  const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route {...rest} render={(props) => (
+      auth.isAuthenticated
+        ?
+        <Component {...props} />
+        :
+        <Redirect to={{
           pathname: '/',
           state: { from: location }
-        }}
-      />
-    );
-  };
-
-  const PrivateRoute1 = (props) => {
-    return !auth.isAuthenticated ? (
-      <Route {...props} />
-    ) : (
-      <Redirect
-        to={{
-          pathname: '/transactions',
-          state: { from: location }
-        }}
-      />
-    );
-  };
+        }} />
+    )} />
+  );
 
   return (
     <div style={{ backgroundColor: "white" }}>
@@ -50,7 +63,7 @@ function App() {
             <PrivateRoute path='/transactions' component={Commerce} />
             <PrivateRoute path='/transactionsdeposit' component={Commercedeposit} />
             <PrivateRoute path='/transactionswithdrawal' component={CommerceWithdrawal} />
-            <PrivateRoute1 path='/' component={Login} />
+            <Route exact path='/' component={Login} />
           </Switch>
         </CSSTransition>
       </TransitionGroup>
