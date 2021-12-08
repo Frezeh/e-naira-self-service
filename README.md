@@ -16,44 +16,44 @@ https://novamblenaira.netlify.app
 1. Login page
 <br />
 
-![Alt text](/assets/images/login.png?raw=true "Login page")
+![Alt text](/public/assets/images/login.png?raw=true "Login page")
 <br />
 
 2. Wallet Info page
 <br />
 
-![Alt text](/assets/images/walletInformation.png?raw=true "Wallet Info page")
+![Alt text](/public/assets/images/walletInformation.png?raw=true "Wallet Info page")
 <br />
 
 3. Confirm Amout Page
 <br />
 
-![Alt text](/assets/images/confirmAmount.png?raw=true "Confirm Amout Page")
+![Alt text](/public/assets/images/confirmAmount.png?raw=true "Confirm Amout Page")
 
 4. Authorize page
 <br />
 
-![Alt text](/assets/images/authorize.png?raw=true "Authorize page")
+![Alt text](/public/assets/images/authorize.png?raw=true "Authorize page")
 <br />
 
 5. Confirm Transaction page
 <br />
 
-![Alt text](/assets/images/confirmTransaction.png?raw=true "Confirm Transaction page")
+![Alt text](/public/assets/images/confirmTransaction.png?raw=true "Confirm Transaction page")
 
 <br />
 
 6. Processing page
 <br />
 
-![Alt text](/assets/images/processing.png?raw=true "Processing page")
+![Alt text](/public/assets/images/processing.png?raw=true "Processing page")
 
 <br />
 
 7. End Session page
 <br />
 
-![Alt text](/assets/images/endSession.png?raw=true "End Session page")
+![Alt text](/public/assets/images/endSession.png?raw=true "End Session page")
 
 
 ### Test credentials
