@@ -10,6 +10,14 @@ e-naira-self-service
 
 https://novamblenaira.netlify.app
 
+
+### Test credentials
+
+Email Adress: test_user+nova@bitt.com
+
+Password: Password1234
+
+
 ### Screenshots:
 
 
@@ -55,12 +63,6 @@ https://novamblenaira.netlify.app
 
 ![Alt text](/public/assets/images/endSession.png?raw=true "End Session page")
 
-
-### Test credentials
-
-Email Adress: test_user+nova@bitt.com
-
-Password: Password1234
 
 
 ## Available Scripts
