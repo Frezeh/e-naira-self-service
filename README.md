@@ -1,6 +1,67 @@
-# Getting Started with Create React App
+# eNaira Self service demo
+eNaira Self service app using React, react-router, react-redux, <br />
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+### Project Title:
+
+e-naira-self-service
+
+### Demo link:
+
+https://novamblenaira.netlify.app
+
+### Screenshots:
+
+
+1. Login page
+<br />
+
+![Alt text](/assets/images/login.png?raw=true "Login page")
+<br />
+
+2. Wallet Info page
+<br />
+
+![Alt text](/assets/images/walletInformation.png?raw=true "Wallet Info page")
+<br />
+
+3. Confirm Amout Page
+<br />
+
+![Alt text](/assets/images/confirmAmount.png?raw=true "Confirm Amout Page")
+
+4. Authorize page
+<br />
+
+![Alt text](/assets/images/authorize.png?raw=true "Authorize page")
+<br />
+
+5. Confirm Transaction page
+<br />
+
+![Alt text](/assets/images/confirmTransaction.png?raw=true "Confirm Transaction page")
+
+<br />
+
+6. Processing page
+<br />
+
+![Alt text](/assets/images/processing.png?raw=true "Processing page")
+
+<br />
+
+7. End Session page
+<br />
+
+![Alt text](/assets/images/endSession.png?raw=true "End Session page")
+
+
+### Test credentials
+
+Email Adress: test_user+nova@bitt.com
+
+Password: Password1234
+
 
 ## Available Scripts
 
@@ -38,33 +99,3 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
